@@ -45,7 +45,7 @@ const Header = () => {
       <Toolbar>
         <Typography variant="h6" style={{ flexGrow: 1 }}>
           <Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
-            My E-commerce Store
+            ElectroShop
           </Link>
         </Typography>
         <IconButton color="inherit" component={Link} to="/cart">
