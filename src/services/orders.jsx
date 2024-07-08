@@ -1,7 +1,6 @@
 import axios from "axios";
 
-// const ORDERS_API_URL = "https://electroshop.hackquest.com/api/orders";
-const ORDERS_API_URL = "http://localhost:3003/api/orders";
+const ORDERS_API_URL = "/api/orders";
 
 export const createOrder = async (orderData) => {
   try {
