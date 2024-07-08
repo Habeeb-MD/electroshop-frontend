@@ -1,8 +1,10 @@
+import React, { useState } from "react";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
 import Grid from "@mui/material/Grid";
 import OutlinedInput from "@mui/material/OutlinedInput";
+import FormHelperText from "@mui/material/FormHelperText";
 import { styled } from "@mui/system";
 
 const FormGrid = styled(Grid)(() => ({
@@ -11,12 +13,44 @@ const FormGrid = styled(Grid)(() => ({
 }));
 
 export default function AddressForm({ addressFormData, setAddressFormData }) {
-  const handleChange = (event) => {
-    setAddressFormData({
-      ...addressFormData,
-      [event.target.name]: event.target.value,
-    });
+  const [errors, setErrors] = useState({});
+
+  const validateField = (name, value) => {
+    let error = "";
+    switch (name) {
+      case "firstName":
+      case "lastName":
+      case "address1":
+      case "city":
+      case "state":
+      case "country":
+        if (!value.trim()) {
+          error = "This field is required";
+        }
+        break;
+      case "zip":
+        if (!value.trim()) {
+          error = "Zip code is required";
+        } else if (!/^\d{5}(-\d{4})?$/.test(value)) {
+          error = "Invalid zip code";
+        }
+        break;
+      default:
+        break;
+    }
+    setErrors((prev) => ({ ...prev, [name]: error }));
   };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    const newData = {
+      ...addressFormData,
+      [name]: value,
+    };
+    setAddressFormData(newData);
+    validateField(name, value);
+  };
+
   return (
     <Grid container spacing={3}>
       <FormGrid item xs={12} md={6}>
@@ -32,7 +66,11 @@ export default function AddressForm({ addressFormData, setAddressFormData }) {
           value={addressFormData.firstName}
           onChange={handleChange}
           required
+          error={!!errors.firstName}
         />
+        {errors.firstName && (
+          <FormHelperText error>{errors.firstName}</FormHelperText>
+        )}
       </FormGrid>
       <FormGrid item xs={12} md={6}>
         <FormLabel htmlFor="lastName" required>
@@ -47,7 +85,11 @@ export default function AddressForm({ addressFormData, setAddressFormData }) {
           value={addressFormData.lastName}
           onChange={handleChange}
           required
+          error={!!errors.lastName}
         />
+        {errors.lastName && (
+          <FormHelperText error>{errors.lastName}</FormHelperText>
+        )}
       </FormGrid>
       <FormGrid item xs={12}>
         <FormLabel htmlFor="address1" required>
@@ -62,7 +104,11 @@ export default function AddressForm({ addressFormData, setAddressFormData }) {
           value={addressFormData.address1}
           onChange={handleChange}
           required
+          error={!!errors.address1}
         />
+        {errors.address1 && (
+          <FormHelperText error>{errors.address1}</FormHelperText>
+        )}
       </FormGrid>
       <FormGrid item xs={12}>
         <FormLabel htmlFor="address2">Address line 2</FormLabel>
@@ -74,7 +120,6 @@ export default function AddressForm({ addressFormData, setAddressFormData }) {
           autoComplete="shipping address-line2"
           value={addressFormData.address2}
           onChange={handleChange}
-          required
         />
       </FormGrid>
       <FormGrid item xs={6}>
@@ -90,7 +135,9 @@ export default function AddressForm({ addressFormData, setAddressFormData }) {
           value={addressFormData.city}
           onChange={handleChange}
           required
+          error={!!errors.city}
         />
+        {errors.city && <FormHelperText error>{errors.city}</FormHelperText>}
       </FormGrid>
       <FormGrid item xs={6}>
         <FormLabel htmlFor="state" required>
@@ -105,7 +152,9 @@ export default function AddressForm({ addressFormData, setAddressFormData }) {
           value={addressFormData.state}
           onChange={handleChange}
           required
+          error={!!errors.state}
         />
+        {errors.state && <FormHelperText error>{errors.state}</FormHelperText>}
       </FormGrid>
       <FormGrid item xs={6}>
         <FormLabel htmlFor="zip" required>
@@ -120,7 +169,9 @@ export default function AddressForm({ addressFormData, setAddressFormData }) {
           value={addressFormData.zip}
           onChange={handleChange}
           required
+          error={!!errors.zip}
         />
+        {errors.zip && <FormHelperText error>{errors.zip}</FormHelperText>}
       </FormGrid>
       <FormGrid item xs={6}>
         <FormLabel htmlFor="country" required>
@@ -135,7 +186,11 @@ export default function AddressForm({ addressFormData, setAddressFormData }) {
           value={addressFormData.country}
           onChange={handleChange}
           required
+          error={!!errors.country}
         />
+        {errors.country && (
+          <FormHelperText error>{errors.country}</FormHelperText>
+        )}
       </FormGrid>
       <FormGrid item xs={12}>
         <FormControlLabel

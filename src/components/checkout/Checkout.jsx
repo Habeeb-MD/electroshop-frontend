@@ -33,6 +33,23 @@ const logoStyle = {
   marginLeft: "-4px",
   marginRight: "-8px",
 };
+
+const isAddressFormValid = (data) => {
+  return (
+    data.firstName &&
+    data.lastName &&
+    data.address1 &&
+    data.city &&
+    data.state &&
+    data.zip &&
+    data.country
+  );
+};
+
+const isPaymentFormValid = (data) => {
+  return data.cardName && data.cardNumber && data.cvv && data.expDate;
+};
+
 const OrderConfirmationMessage = ({ orderID }) => {
   return (
     <Stack spacing={2} useFlexGap>
@@ -75,7 +92,16 @@ export default function Checkout() {
   const [addressFormData, setAddressFormData] = React.useState(shippingAddress);
   const [paymentDetails, setPaymentDetails] = React.useState(paymentMethod);
 
+  const canPlaceOrder = () => {
+    return (
+      isAddressFormValid(shippingAddress) &&
+      isPaymentFormValid(paymentMethod) &&
+      cart.length > 0
+    );
+  };
+
   const handlePlaceOrder = async () => {
+    if (!canPlaceOrder()) return;
     setActiveStep(steps.length);
     const orderData = {
       items: cart,
@@ -106,7 +132,12 @@ export default function Checkout() {
           />
         );
       case 2:
-        return <Review handlePlaceOrder={handlePlaceOrder} />;
+        return (
+          <Review
+            handlePlaceOrder={handlePlaceOrder}
+            canPlaceOrder={canPlaceOrder}
+          />
+        );
       default:
         throw new Error("Unknown step");
     }
@@ -114,19 +145,27 @@ export default function Checkout() {
 
   const handleNext = () => {
     if (activeStep === 0) {
-      updateShippingAddress(addressFormData);
+      if (isAddressFormValid(addressFormData)) {
+        updateShippingAddress(addressFormData);
+        setActiveStep(activeStep + 1);
+      }
     } else if (activeStep === 1) {
-      updatePaymentMethod(paymentDetails);
+      if (isPaymentFormValid(paymentDetails)) {
+        updatePaymentMethod(paymentDetails);
+        setActiveStep(activeStep + 1);
+      }
     } else if (activeStep === 2) {
-      handlePlaceOrder()
-        .then(() => {
-          console.log("order placed");
-        })
-        .catch((error) => {
-          console.error("Failed to place order:", error);
-        });
+      if (canPlaceOrder()) {
+        handlePlaceOrder()
+          .then(() => {
+            console.log("order placed");
+            setActiveStep(activeStep + 1);
+          })
+          .catch((error) => {
+            console.error("Failed to place order:", error);
+          });
+      }
     }
-    setActiveStep(activeStep + 1);
   };
 
   const handleBack = () => {
@@ -389,6 +428,9 @@ export default function Checkout() {
                     sx={{
                       width: { xs: "100%", sm: "fit-content" },
                     }}
+                    disabled={
+                      activeStep === steps.length - 1 && !canPlaceOrder()
+                    }
                   >
                     {activeStep === steps.length - 1 ? "Place order" : "Next"}
                   </Button>

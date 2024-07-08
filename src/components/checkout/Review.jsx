@@ -9,7 +9,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useCart } from "../../hooks/useCart";
 
-export default function Review({ handlePlaceOrder }) {
+export default function Review({ handlePlaceOrder, canPlaceOrder }) {
   const { cart, getCartTotal, shippingAddress, paymentMethod } = useCart();
   const totalPrice = getCartTotal();
   const shippingCost = 9.99; // TO DO :- Calculate this dynamically
@@ -97,6 +97,7 @@ export default function Review({ handlePlaceOrder }) {
         color="primary"
         onClick={() => handlePlaceOrder()}
         fullWidth
+        disabled={!canPlaceOrder()}
       >
         Place Order
       </Button>
