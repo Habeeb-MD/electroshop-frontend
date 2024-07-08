@@ -14,7 +14,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { login } from "../../services/auth";
 import { useAuth } from "../../hooks/useAuth";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -40,6 +40,7 @@ const defaultTheme = createTheme();
 
 export default function SignIn() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [error, setError] = useState("");
   const { login: authLogin } = useAuth();
@@ -51,7 +52,8 @@ export default function SignIn() {
     try {
       const user = await login(data.get("email"), data.get("password"));
       authLogin(user);
-      navigate("/");
+      const destination = location.state?.from || "/";
+      navigate(destination, { replace: true });
     } catch (err) {
       setError("Invalid email or password");
     }

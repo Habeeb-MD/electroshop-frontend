@@ -15,7 +15,7 @@ import OrderDetails from "./components/orders/OrderDetails.jsx";
 import OrderList from "./components/orders/OrderList.jsx";
 import ResetPassword from "./components/auth/ResetPassword.jsx";
 import ForgotPassword from "./components/auth/ForgotPassword.jsx";
-
+import ProtectedRoute from "./components/common/ProtectedRoute";
 import { createTheme } from "@mui/material";
 import { ThemeProvider } from "@mui/styles";
 
@@ -44,10 +44,31 @@ const App = () => {
               <Route path="/product/:productId" element={<ProductDetails />} />
 
               <Route path="/cart" element={<CartPage />} />
-              <Route path="/checkout" element={<Checkout />} />
+              <Route
+                path="/checkout"
+                element={
+                  <ProtectedRoute>
+                    <Checkout />
+                  </ProtectedRoute>
+                }
+              />
 
-              <Route path="/orders" element={<OrderList />} />
-              <Route path="/orders/:id" element={<OrderDetails />} />
+              <Route
+                path="/orders"
+                element={
+                  <ProtectedRoute>
+                    <OrderList />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/orders/:id"
+                element={
+                  <ProtectedRoute>
+                    <OrderDetails />
+                  </ProtectedRoute>
+                }
+              />
             </Routes>
             <Footer />
           </Router>
