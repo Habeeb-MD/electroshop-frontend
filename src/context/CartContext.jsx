@@ -71,6 +71,7 @@ export const CartProvider = ({ children }) => {
 
   const clearCart = () => {
     setCart(cartDefault);
+    localStorage.removeItem("cart");
     setShippingAddress(shippingAddressDefault);
     setPaymentMethod(paymentDefault);
   };

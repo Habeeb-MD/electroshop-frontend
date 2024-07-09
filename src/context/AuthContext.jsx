@@ -10,8 +10,14 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const loadUser = async () => {
       try {
-        const userData = await getUser();
-        setUser(userData);
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+          setUser(JSON.parse(storedUser));
+        } else {
+          const userData = await getUser();
+          setUser(userData);
+          localStorage.setItem("user", JSON.stringify(userData));
+        }
       } catch (error) {
         console.error("Failed to load user:", error);
       } finally {
@@ -24,17 +30,18 @@ export const AuthProvider = ({ children }) => {
 
   const login = (userData) => {
     setUser(userData);
+    localStorage.setItem("user", JSON.stringify(userData));
   };
 
   const logoutUser = async () => {
     try {
       await logout();
       setUser(null);
+      localStorage.removeItem("user");
     } catch (error) {
       console.error("Logout failed:", error);
     }
   };
-
   return (
     <AuthContext.Provider value={{ user, login, logout: logoutUser, loading }}>
       {children}
