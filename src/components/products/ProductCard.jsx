@@ -20,8 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
   media: {
     height: 200,
-    backgroundSize: "contain",
-    backgroundPosition: "center",
+    objectFit: "contain",
   },
   content: {
     flexGrow: 1,

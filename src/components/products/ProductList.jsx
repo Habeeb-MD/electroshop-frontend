@@ -93,8 +93,7 @@ const ProductList = ({ featured = false }) => {
         (product) => product.price <= Number(priceFilter.max),
       );
     }
-
-    setFilteredProducts(result);
+    setFilteredProducts(featured ? result.slice(0, 6) : result);
   }, [products, searchTerm, brandFilter, typeFilter, priceFilter]);
 
   const handleSortChange = (e) => {
