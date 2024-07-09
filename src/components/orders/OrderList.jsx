@@ -17,6 +17,7 @@ import {
 import { Link } from "react-router-dom";
 import { getOrders } from "../../services/orders";
 import makeStyles from "@mui/styles/makeStyles";
+import LoadingSpinner from "../common/LoadingSpinner.jsx";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -108,7 +109,7 @@ const OrderList = () => {
     setFilteredOrders(filtered);
   }, [orders, startDate, endDate, minPrice, maxPrice, status, sortOrder]);
 
-  if (loading) return <Typography>Loading orders...</Typography>;
+  if (loading) return <LoadingSpinner />;
   if (error) return <Typography color="error">{error}</Typography>;
 
   return (

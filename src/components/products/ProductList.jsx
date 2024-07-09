@@ -15,6 +15,7 @@ import {
 import makeStyles from "@mui/styles/makeStyles";
 import ProductCard from "./ProductCard";
 import { getProducts } from "../../services/products.js";
+import LoadingSpinner from "../common/LoadingSpinner.jsx";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -108,7 +109,7 @@ const ProductList = ({ featured = false }) => {
     });
     setSortOrder(e.target.value);
   };
-  if (loading) return <Typography>Loading products...</Typography>;
+  if (loading) return <LoadingSpinner />;
   if (error) return <Typography color="error">{error}</Typography>;
 
   const brands = [...new Set(products.map((product) => product.brand))];
