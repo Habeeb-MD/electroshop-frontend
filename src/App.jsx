@@ -18,6 +18,7 @@ import ForgotPassword from "./components/auth/ForgotPassword.jsx";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import { createTheme } from "@mui/material";
 import { ThemeProvider } from "@mui/styles";
+import ScrollToTop from "./components/common/ScrollToTop.jsx";
 
 const App = () => {
   const theme = createTheme();
@@ -26,6 +27,7 @@ const App = () => {
       <CartProvider>
         <ThemeProvider theme={theme}>
           <Router>
+            <ScrollToTop />
             <Header />
             <Routes>
               <Route path="/" element={<Home />} />

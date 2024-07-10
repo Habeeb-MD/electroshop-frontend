@@ -18,7 +18,6 @@ function Copyright() {
   );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function StickyFooter() {
@@ -44,7 +43,14 @@ export default function StickyFooter() {
                 : theme.palette.grey[800],
           }}
         >
-          <Container maxWidth="sm">
+          <Container
+            maxWidth="sm"
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             <Copyright />
           </Container>
         </Box>

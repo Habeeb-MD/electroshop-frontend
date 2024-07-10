@@ -2,6 +2,7 @@ import { useState } from "react";
 import {
   AppBar,
   Badge,
+  Box,
   Button,
   IconButton,
   ListItemIcon,
@@ -43,11 +44,19 @@ const Header = () => {
   return (
     <AppBar position="static">
       <Toolbar>
-        <Typography variant="h6" style={{ flexGrow: 1 }}>
-          <Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
-            ElectroShop
-          </Link>
-        </Typography>
+        <Box display="flex" alignItems="center" style={{ flexGrow: 1 }}>
+          <Box
+            component="img"
+            src="/vite.svg"
+            alt="ElectroShop logo"
+            sx={{ height: 24, marginRight: 1 }}
+          />
+          <Typography variant="h6">
+            <Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
+              ElectroShop
+            </Link>
+          </Typography>
+        </Box>
         <IconButton color="inherit" component={Link} to="/cart">
           <Badge badgeContent={cart.length} color="secondary">
             <ShoppingCartIcon />

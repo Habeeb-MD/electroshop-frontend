@@ -26,7 +26,7 @@ function Copyright(props) {
     >
       {"Copyright © "}
       <Link color="inherit" href="https://electroshop.hackquest.com/">
-        Your Website
+        ElectroShop
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -92,6 +92,7 @@ export default function SignIn() {
               name="email"
               autoComplete="email"
               autoFocus
+              defaultValue="test@email.com"
             />
             <TextField
               margin="normal"
@@ -102,6 +103,7 @@ export default function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
+              defaultValue="password_test"
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}

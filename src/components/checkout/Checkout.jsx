@@ -212,12 +212,11 @@ export default function Checkout() {
               sx={{ ml: "-8px" }}
             >
               Back to
-              <img
-                src={
-                  "https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12e6faf73568658154dae_SitemarkDefault.svg"
-                }
-                style={logoStyle}
-                alt="Company's logo"
+              <Box
+                component="img"
+                src="/vite.svg"
+                alt="Vite logo"
+                sx={{ height: 36, marginLeft: 1.5 }}
               />
             </Button>
           </Box>
